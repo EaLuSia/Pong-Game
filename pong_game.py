@@ -1,5 +1,7 @@
 import turtle
+import random
 from tkinter import messagebox
+
 wn=turtle.Screen()
 wn.title('ping-pong')
 wn.bgcolor('black')
@@ -31,6 +33,7 @@ ball.shape('square')
 ball.color('white')
 ball.penup()
 ball.goto(0,0)
+speed = [0.15,0.17,0.19]
 ball.dx=0.15
 ball.dy=-0.15
 
@@ -108,23 +111,44 @@ while score_a<3 and score_b<3:
 
     if ball.xcor()>390:
         ball.goto(0,0)
-        ball.dx *= -1
+        ball.dx = random.choice(speed)* -1
+        ball.dy = random.choice(speed)
         score_a += 1
         scoreboard.clear()
         scoreboard.write(f'P1 : {score_a}   P2 : {score_b}', align='center', font=('Courier', 24, 'normal'))
     elif ball.xcor() <-400:
         ball.goto(0,0)
-        ball.dx *= -1
+        ball.dx = random.choice(speed)
+        ball.dy = random.choice(speed) * -1
         score_b += 1
         scoreboard.clear()
         scoreboard.write(f'P1 : {score_a}   P2 : {score_b}', align='center', font=('Courier', 24, 'normal'))
 
     #paddle and ball collision
-    if (ball.xcor()<-340 and ball.xcor()>-350) and (ball.ycor()<paddle_a.ycor()+50 and ball.ycor()>paddle_a.ycor()-50):
-        ball.dx *= -1
+    if (ball.xcor()<-340 and ball.xcor()>-350) and (ball.ycor()<paddle_a.ycor()+15 and ball.ycor()>paddle_a.ycor()-15):
+        ball.dx = random.choice(speed) * 2
+        ball.dy = 0
 
-    if (ball.xcor()>340 and ball.xcor()<350) and (ball.ycor()<paddle_b.ycor()+50 and ball.ycor()>paddle_b.ycor()-50):
-        ball.dx *= -1
+    if (ball.xcor()<-340 and ball.xcor()>-350) and (ball.ycor()>paddle_a.ycor()+15 and ball.ycor()<paddle_a.ycor()+50):
+        ball.dx = random.choice(speed)
+        ball.dy = random.choice(speed)
+
+    if (ball.xcor()<-340 and ball.xcor()>-350) and (ball.ycor()<paddle_a.ycor()-15 and ball.ycor()>paddle_a.ycor()-50):
+        ball.dx = random.choice(speed)
+        ball.dy = random.choice(speed) * -1
+
+    if (ball.xcor()>340 and ball.xcor()<350) and (ball.ycor()<paddle_b.ycor()+15 and ball.ycor()>paddle_b.ycor()-15):
+        ball.dx = random.choice(speed) * -2
+        ball.dy = 0
+
+    if (ball.xcor()>340 and ball.xcor()<350) and (ball.ycor()>paddle_b.ycor()+15 and ball.ycor()<paddle_b.ycor()+50):
+        ball.dx = random.choice(speed) * -1
+        ball.dy = random.choice(speed)
+
+    if (ball.xcor()>340 and ball.xcor()<350) and (ball.ycor()<paddle_b.ycor()-15 and ball.ycor()>paddle_b.ycor()-50):
+        ball.dx = random.choice(speed) * -1
+        ball.dy = random.choice(speed) * -1
+
 
     if score_a==3:
         print('Player1 win!')
